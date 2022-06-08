@@ -22,7 +22,8 @@ namespace MSTestUnitTests.LinkedListTests.Builders
             // Assert
             Assert.IsNotNull(decimalTypeLinkedList);
             Assert.IsInstanceOfType(decimalTypeLinkedList, typeof(ListElement<decimal>));
-            Assert.AreEqual<int>(seedValues.Length, decimalTypeLinkedList.CountListElementNodes());           
+            Assert.AreEqual<int>(seedValues.Length, decimalTypeLinkedList.CountListElementNodes());
+            Assert.IsTrue(decimalTypeLinkedList.IsHead);
 
         }
     }

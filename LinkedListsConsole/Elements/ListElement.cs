@@ -4,22 +4,31 @@ using System.ComponentModel;
 using System.Text;
 
 namespace LinkedListsConsole.Elements
-{
-   
+{   
     public class ListElement<T>
     {
         private ListElement<T> _next;
         private T _value;       
        
-        public ListElement(T value )
+        public ListElement(T value)
         {
             _value = value;
         }
+
+        public ListElement(T value, bool isHead)  : this(value)
+        {
+            IsHead = isHead;
+        }
+
         public ListElement(T value, ListElement<T> next) : this(value)
         {
             _next = next;
         }
+
+
         public T Value => _value;
+
+        public bool IsHead { get; private set; }
 
         public ListElement<T> Next => _next;
 
@@ -33,7 +42,8 @@ namespace LinkedListsConsole.Elements
         {
             StringBuilder builder = new StringBuilder();
             
-            builder.AppendLine($"ElementValue: {Value} {Environment.NewLine} NextElement: { (Next == null ? "empty" : Next.ToString()) }");           
+            builder.AppendLine($"ElementValue: {Value} {Environment.NewLine} IsHeadNode: {IsHead} {Environment.NewLine}" +
+                $" NextElement: { (Next == null ? "empty" : Next.ToString()) }");           
 
             return builder.ToString();
         }

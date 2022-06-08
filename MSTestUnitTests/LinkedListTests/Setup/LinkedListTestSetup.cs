@@ -1,4 +1,5 @@
 ﻿using LinkedListsConsole.Builders;
+using LinkedListsConsole.Business.InvariantGuard;
 using LinkedListsConsole.Business.Strategy;
 using LinkedListsConsole.Elements;
 using LinkedListsConsole.Services;
@@ -28,6 +29,8 @@ namespace MSTestUnitTests.LinkedListTests.Setup
 
         public ISinglyLinkedListBuilder<ListElement<int>, IEnumerable<int>> IntegerBasedSinglyLinkedListBuilder { get; private set; }
 
+        public ISinglyLinkedListHeadNodeValidator SinglyLinkedListHeadNodeValidator { get; private set; }   
+
 
         #endregion
 
@@ -39,16 +42,20 @@ namespace MSTestUnitTests.LinkedListTests.Setup
             DecimalBasedSinglyLinkedListCreator = (ISinglyLinkedListCreator<decimal>)serviceProvider.GetRequiredService(typeof(ISinglyLinkedListCreator<decimal>));
             IntegerBasedLinkedListTotalValueCalculator = (IStrategy<int, ListElement<int>>)serviceProvider.GetRequiredService(typeof(IStrategy<int, ListElement<int>>));
             DecimalBasedLinkedListTotalValueCalculator = (IStrategy<decimal, ListElement<decimal>>)serviceProvider.GetRequiredService(typeof(IStrategy<decimal, ListElement<decimal>>));
-            DecimalBasedSinglyLinkedListBuilder = 
+            DecimalBasedSinglyLinkedListBuilder =
                 (ISinglyLinkedListBuilder<ListElement<decimal>, IEnumerable<decimal>>)serviceProvider.GetRequiredService(typeof(ISinglyLinkedListBuilder<ListElement<decimal>, IEnumerable<decimal>>));
             IntegerBasedSinglyLinkedListBuilder =
                (ISinglyLinkedListBuilder<ListElement<int>, IEnumerable<int>>)serviceProvider.GetRequiredService(typeof(ISinglyLinkedListBuilder<ListElement<int>, IEnumerable<int>>));
+            SinglyLinkedListHeadNodeValidator = (ISinglyLinkedListHeadNodeValidator)serviceProvider.GetRequiredService(typeof(ISinglyLinkedListHeadNodeValidator));
         }
 
         private ServiceProvider SetupServices()
         {
             IServiceCollection services = new ServiceCollection();
             // Configure services here 
+
+            services.AddScoped<ISinglyLinkedListHeadNodeValidator, SinglyLinkedListHeadNodeValidator>();
+
             services.AddScoped<ISinglyLinkedListBuilder<ListElement<decimal>, IEnumerable<decimal>>, SinglyLinkedListBuilder>();
             services.AddScoped<ISinglyLinkedListBuilder<ListElement<int>, IEnumerable<int>>, SinglyLinkedListBuilder>();
 
